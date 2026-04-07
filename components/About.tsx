@@ -17,7 +17,7 @@ export default function About() {
         
         <FadeIn direction="right" delay={0.2}>
           <div>
-            <h2 className="font-headline text-4xl font-extrabold text-white mb-8 tracking-tight">Muhammad Raihaan Humris</h2>
+            <h2 className="font-headline text-4xl font-extrabold text-white mb-8 tracking-tight">Tentang Saya</h2>
             <div className="w-20 h-1 bg-white mb-8"></div>
             
             <p className="text-on-surface-variant text-lg leading-relaxed mb-6">

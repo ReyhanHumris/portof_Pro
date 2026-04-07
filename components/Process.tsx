@@ -34,7 +34,7 @@ export default function Process() {
             </h2>
             <div className="flex items-center gap-4">
               <h3 className="text-4xl font-extrabold text-white tracking-tight">
-                Bagaimana Monolit dibangun.
+                Bagaimana Program di buat.
               </h3>
             </div>
           </div>

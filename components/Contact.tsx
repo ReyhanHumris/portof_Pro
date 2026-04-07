@@ -64,7 +64,7 @@ export default function Contact() {
                   <div className="w-12 h-12 flex items-center justify-center bg-white/5 group-hover:bg-white group-hover:text-slate-950 transition-colors">
                     <span className="material-symbols-outlined">mail</span>
                   </div>
-                  <span className="text-lg font-bold text-white">hello@reylabns.com</span>
+                  <span className="text-lg font-bold text-white">raihaanhumris@gmail.com</span>
                 </a>
                 
                 <button onClick={handleWhatsAppDirect} className="flex items-center gap-4 group w-full text-left">
@@ -87,7 +87,7 @@ export default function Contact() {
                 <input 
                   type="text" 
                   className="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-white text-white p-4 sharp-edge outline-none" 
-                  placeholder="John Doe" 
+                  placeholder="nama lengkap Anda" 
                   required
                   value={formData.name}
                   onChange={e => setFormData({...formData, name: e.target.value})}
@@ -101,7 +101,7 @@ export default function Contact() {
                 <input 
                   type="email" 
                   className="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-white text-white p-4 sharp-edge outline-none" 
-                  placeholder="john@example.com" 
+                  placeholder="Input@gmail.com" 
                   required
                   value={formData.email}
                   onChange={e => setFormData({...formData, email: e.target.value})}
