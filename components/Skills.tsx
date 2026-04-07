@@ -18,40 +18,40 @@ export default function Skills() {
   ];
 
   const renderGrid = (items: { icon: string; name: string }[]) => (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-3">
       {items.map((skill, index) => (
-        <FadeIn key={index} direction="up" delay={index * 0.05} className="bg-white/5 border border-white/10 p-6 flex flex-col items-center justify-center group hover:bg-white/10 hover:border-white/30 transition-all sharp-edge">
-          <span className="material-symbols-outlined text-4xl text-white mb-4 group-hover:scale-110 transition-transform">{skill.icon}</span>
-          <span className="font-bold text-white tracking-tight text-center">{skill.name}</span>
+        <FadeIn key={index} direction="up" delay={index * 0.05} className="bg-white/5 border border-white/10 p-4 md:p-5 flex flex-col items-center justify-center group hover:bg-white/10 hover:border-white/30 transition-all sharp-edge">
+          <span className="material-symbols-outlined text-3xl md:text-4xl text-white mb-3 group-hover:scale-110 transition-transform">{skill.icon}</span>
+          <span className="font-bold text-white tracking-tight text-center text-sm md:text-base">{skill.name}</span>
         </FadeIn>
       ))}
     </div>
   );
 
   return (
-    <section id="skills" className="py-32 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" className="py-20 md:py-24 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
         <FadeIn direction="up">
-          <div className="mb-20 text-center md:text-left">
-            <h2 className="font-headline text-5xl font-extrabold text-white tracking-tighter uppercase">
+          <div className="mb-12 md:mb-14 text-center md:text-left">
+            <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-white tracking-tighter uppercase">
               Area Keahlian
             </h2>
-            <p className="text-slate-500 mt-4 tracking-[0.2em] font-label text-sm">
+            <p className="text-slate-500 mt-3 tracking-[0.16em] font-label text-xs md:text-sm">
               Komponen utama yang membentuk monolit
             </p>
           </div>
         </FadeIn>
         
-        <div className="grid md:grid-cols-2 gap-16">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-10">
           <div>
-            <h3 className="font-label text-sm uppercase tracking-widest text-secondary mb-6 pl-2 border-l-4 border-white/20">
+            <h3 className="font-label text-xs md:text-sm uppercase tracking-widest text-secondary mb-4 pl-2 border-l-4 border-white/20">
               Bahasa Pemrograman & Framework
             </h3>
             {renderGrid(programAndFrameworks)}
           </div>
           
           <div>
-            <h3 className="font-label text-sm uppercase tracking-widest text-secondary mb-6 pl-2 border-l-4 border-white/20">
+            <h3 className="font-label text-xs md:text-sm uppercase tracking-widest text-secondary mb-4 pl-2 border-l-4 border-white/20">
               Library & Tools
             </h3>
             {renderGrid(toolsAndLibraries)}

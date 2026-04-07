@@ -1,4 +1,3 @@
-import Image from "next/image";
 import FadeIn from "./FadeIn";
 
 export default function Projects() {
@@ -24,15 +23,15 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-32 bg-surface-container-lowest">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="projects" className="py-20 md:py-24 bg-surface-container-lowest">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <FadeIn direction="up">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-14 gap-6">
             <div className="max-w-xl">
-              <h2 className="font-headline text-5xl font-extrabold text-white tracking-tight mb-4">
+              <h2 className="font-headline text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
                 Studi Kasus Struktural
               </h2>
-              <p className="text-on-surface-variant text-lg">
+              <p className="text-on-surface-variant text-sm md:text-base">
                 Kumpulan aplikasi end-to-end yang dirancang untuk skala, performa, dan stabilitas industri.
               </p>
             </div>
@@ -42,10 +41,10 @@ export default function Projects() {
           </div>
         </FadeIn>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <FadeIn key={index} direction="up" delay={index * 0.1} className="flex flex-col group">
-              <div className="relative overflow-hidden mb-6 aspect-video bg-surface-container-high">
+              <div className="relative overflow-hidden mb-4 aspect-video bg-surface-container-high">
                 <img 
                   src={project.img} 
                   alt={project.title} 
@@ -53,8 +52,8 @@ export default function Projects() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-60"></div>
               </div>
-              <div className="px-2">
-                <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
+              <div className="px-1">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{project.title}</h3>
                 <p className="text-on-surface-variant text-sm mb-6 leading-relaxed">
                   {project.desc}
                 </p>
