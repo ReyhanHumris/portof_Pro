@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,8 +23,16 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/15 shadow-[0_10px_30px_-15px_rgba(6,14,32,0.8)] sharp-edge">
       <div className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-6xl mx-auto">
-        <a href="#" onClick={(e) => handleScroll(e, 'top')} className="text-xl md:text-2xl font-black tracking-tighter text-white">
-          ReyDev
+        <a href="#" onClick={(e) => handleScroll(e, 'top')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <Image 
+            src="/logo.svg" 
+            alt="RH Logo" 
+            width={44} 
+            height={44}
+            className="h-11 w-11"
+            priority
+          />
+          <span className="text-xl md:text-2xl font-black tracking-tighter text-white">ReyDev</span>
         </a>
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6 text-sm">
