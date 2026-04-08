@@ -51,6 +51,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`dark ${manrope.variable}`}>
       <head>
+        <link rel="icon" href="https://raihaan-personal.vercel.app/favicon.ico" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
