@@ -25,7 +25,7 @@ export default function Navbar() {
       <div className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-6xl mx-auto">
         <a href="#" onClick={(e) => handleScroll(e, 'top')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <Image 
-            src="/logo.svg" 
+            src="/logo.png" 
             alt="RH Logo" 
             width={44} 
             height={44}
