@@ -2,9 +2,9 @@ import FadeIn from "./FadeIn";
 
 export default function Skills() {
   const programAndFrameworks = [
-    { icon: 'code', name: 'HTML5' },
-    { icon: 'css', name: 'CSS3' },
-    { icon: 'javascript', name: 'JS (ES6+)' },
+    { icon: 'code', name: 'HTML' },
+    { icon: 'css', name: 'CSS' },
+    { icon: 'javascript', name: 'Java Script' },
     { icon: 'data_object', name: 'PHP' },
     { icon: 'local_fire_department', name: 'Laravel' },
     { icon: 'dns', name: 'Node.js' }
