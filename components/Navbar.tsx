@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,10 +22,9 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/15 shadow-[0_10px_30px_-15px_rgba(6,14,32,0.8)] sharp-edge">
       <div className="flex justify-between items-center px-4 sm:px-6 py-3 max-w-6xl mx-auto">
-        <a href="#" onClick={(e) => handleScroll(e, 'top')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <span className="text-xl md:text-2xl font-black tracking-tighter text-white hidden sm:inline">ReyDev</span>
+        <a href="#" onClick={(e) => handleScroll(e, 'top')} className="text-xl md:text-2xl font-black tracking-tighter text-white">
+          ReyDev
         </a>
-        
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6 text-sm">
           <a href="#" onClick={(e) => handleScroll(e, 'top')} className="text-white border-b-2 border-white pb-1 font-manrope tracking-tight font-bold cursor-pointer">Beranda</a>
