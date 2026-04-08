@@ -32,7 +32,7 @@ export default function About() {
                 <div className="font-label text-[10px] uppercase tracking-widest text-slate-500">Tahun Pengalaman</div>
               </div>
               <div>
-                <div className="text-4xl font-black text-white mb-2">20+</div>
+                <div className="text-4xl font-black text-white mb-2">7+</div>
                 <div className="font-label text-[10px] uppercase tracking-widest text-slate-500">Proyek</div>
               </div>
               <div>

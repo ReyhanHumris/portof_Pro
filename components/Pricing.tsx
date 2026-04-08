@@ -29,13 +29,13 @@ export default function Pricing() {
               </div>
               <ul className="space-y-4 mb-12">
                 <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Rekayasa Fitur Inti
+                  <span className="material-symbols-outlined text-white text-lg">check</span> Pembuatan Landing Page Responsif
                 </li>
                 <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Cetak Biru Arsitektur
+                  <span className="material-symbols-outlined text-white text-lg">check</span> Desain UI Sederhana
                 </li>
                 <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Pengaturan Penerapan
+                  <span className="material-symbols-outlined text-white text-lg">check</span> Integrasi Konten Statis
                 </li>
               </ul>
             </div>
@@ -60,13 +60,13 @@ export default function Pricing() {
               </div>
               <ul className="space-y-4 mb-12">
                 <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Struktur Data Kompleks
+                  <span className="material-symbols-outlined text-white text-lg">check</span> Pengembangan Frontend & Backend
                 </li>
                 <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Sinkronisasi API Pihak Ketiga
+                  <span className="material-symbols-outlined text-white text-lg">check</span> Panel Admin/Dashboard Interaktif
                 </li>
                 <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Interaksi UI Lanjutan
+                  <span className="material-symbols-outlined text-white text-lg">check</span> Hosting dan Deployment Sederhana
                 </li>
               </ul>
             </div>
