@@ -6,12 +6,17 @@ export default function About() {
     <section id="about" className="py-32 bg-surface-container-low">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
         <FadeIn direction="left">
-          <div className="relative group">
+          <div className="relative group overflow-hidden rounded-[2rem]">
             <div className="absolute -inset-4 border border-white/5 z-0 group-hover:border-white/10 transition-colors"></div>
-            <img 
-              src="/IMG_2081.CR2.jpg" 
-              className="relative z-10 w-full aspect-square object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700 sharp-edge"
-            />
+            <div className="relative z-10 w-full aspect-square">
+              <Image
+                src="/about.jpg"
+                alt="Foto Muhammad Raihaan Humris"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
           </div>
         </FadeIn>
         

@@ -9,6 +9,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://raihaan-personal.vercel.app"),
   title: {
     default: "Raihaan Humris | Fullstack Engineer",
     template: "%s | Raihaan Humris"
@@ -31,13 +32,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://raihaanhumris.vercel.app", 
+    url: "https://raihaan-personal.vercel.app",
     title: "Raihaan Humris | Fullstack Engineer",
     description: "Portofolio Raihaan Humris, Fullstack Systems Architect.",
     siteName: "Raihaan Humris Portfolio",
     images: [
       {
-        url: "/IMG_2081.CR2.jpg", // Ini yang akan muncul di hasil pencarian Google
+        url: "/about.jpg",
         width: 1200,
         height: 630,
         alt: "Raihaan Humris",
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Raihaan Humris | Fullstack Engineer",
     description: "Portofolio Raihaan Humris.",
-    images: ["/logo.png"],
+    images: ["/about.jpg"],
   },
   robots: {
     index: true,
