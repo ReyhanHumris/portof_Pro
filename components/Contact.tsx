@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import FadeIn from "./FadeIn";
+import { motion } from "framer-motion";
+import SectionHeader from "./SectionHeader";
+import StaggerContainer from "./StaggerContainer";
+import { fadeLeft, fadeRight, scaleIn } from "@/lib/animations";
+import { site } from "@/lib/site";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    summary: ""
+    summary: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -19,11 +23,11 @@ export default function Contact() {
       const res = await fetch("/api/whatsapp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
-      
+
       const data = await res.json();
-      
+
       if (data.url) {
         window.open(data.url, "_blank");
       } else {
@@ -37,103 +41,114 @@ export default function Contact() {
     }
   };
 
-  const handleWhatsAppDirect = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.open("https://wa.me/628233934478", "_blank");
-  };
+  const fields = [
+    { key: "name" as const, label: "Nama", type: "text", placeholder: "Nama lengkap Anda" },
+    { key: "email" as const, label: "Email", type: "email", placeholder: "email@contoh.com" },
+  ];
 
   return (
-    <section id="contact" className="py-20 md:py-24 bg-surface-container-low overflow-hidden relative">
-      <div className="absolute -right-20 top-0 text-[9rem] md:text-[20rem] font-black text-white/5 select-none leading-none">
-        KONTAK
-      </div>
-      
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid md:grid-cols-2 gap-10 md:gap-14">
-          <FadeIn direction="left">
-            <div>
-              <h2 className="font-headline text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tighter">
-                Siap untuk memulai <br /> sebuah proyek?
-              </h2>
-              <p className="text-on-surface-variant text-base md:text-lg mb-8 max-w-md">
-                Mari bangun sesuatu yang bermakna. Apakah Anda memiliki spesifikasi detail atau hanya sekadar konsep, saya siap merekayasa solusinya.
-              </p>
-              
-              <div className="space-y-4">
-                <a href="mailto:hello@reylabns.com" className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 flex items-center justify-center bg-white/5 group-hover:bg-white group-hover:text-slate-950 transition-colors">
-                    <span className="material-symbols-outlined">mail</span>
-                  </div>
-                  <span className="text-base md:text-lg font-bold text-white break-all">raihaanhumris@gmail.com</span>
-                </a>
-                
-                <button onClick={handleWhatsAppDirect} className="flex items-center gap-4 group w-full text-left">
-                  <div className="w-10 h-10 flex items-center justify-center bg-white/5 group-hover:bg-[#25D366] group-hover:text-white transition-colors">
-                    <span className="material-symbols-outlined">chat</span>
-                  </div>
-                  <span className="text-base md:text-lg font-bold text-white">WhatsApp Saya</span>
-                </button>
-              </div>
-            </div>
-          </FadeIn>
-          
-          <FadeIn direction="right" delay={0.2}>
-            <div className="bg-surface p-6 md:p-10 shadow-2xl border border-white/5 sharp-edge">
-              <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label className="font-label text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">
-                  Nama Anda
-                </label>
-                <input 
-                  type="text" 
-                  className="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-white text-white p-3 sharp-edge outline-none" 
-                  placeholder="nama lengkap Anda" 
-                  required
-                  value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
-                />
-              </div>
-              
-              <div>
-                <label className="font-label text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">
-                  Email Anda
-                </label>
-                <input 
-                  type="email" 
-                  className="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-white text-white p-3 sharp-edge outline-none" 
-                  placeholder="Input@gmail.com" 
-                  required
-                  value={formData.email}
-                  onChange={e => setFormData({...formData, email: e.target.value})}
-                />
-              </div>
-              
-              <div>
-                <label className="font-label text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">
-                  Ringkasan Proyek
-                </label>
-                <textarea 
-                  className="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-white text-white p-3 sharp-edge outline-none resize-y" 
-                  rows={4}
-                  placeholder="Jelaskan ruang lingkupnya..."
-                  required
-                  value={formData.summary}
-                  onChange={e => setFormData({...formData, summary: e.target.value})}
-                ></textarea>
-              </div>
-              
-              <button 
-                type="submit" 
-                disabled={loading}
-                className="w-full bg-white text-slate-950 py-3.5 text-sm md:text-base font-black uppercase tracking-widest hover:bg-slate-200 transition-all sharp-edge disabled:opacity-50"
+    <section id="contact" className="section-padding bg-surface-container-low overflow-hidden relative">
+      <motion.div className="container-site relative z-10">
+        <SectionHeader
+          label="Kontak"
+          title="Mari Berkolaborasi"
+          subtitle="Punya ide proyek? Kirim pesan dan kita diskusikan solusi terbaiknya."
+          align="center"
+        />
+
+        <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <motion.div
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <p className="text-on-surface-variant leading-relaxed">
+              Saya terbuka untuk proyek website, sistem web, dan kolaborasi jangka panjang. Respons biasanya dalam 24 jam.
+            </p>
+
+            <StaggerContainer className="space-y-3" stagger={0.08}>
+              <motion.a
+                variants={scaleIn}
+                href={`mailto:${site.email}`}
+                className="card-modern flex items-center gap-4 p-5 group"
               >
-                {loading ? "Memproses..." : "Kirim Pesan Aman"}
-              </button>
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-white group-hover:text-slate-950 transition-colors">
+                  <span className="material-symbols-outlined">mail</span>
+                </span>
+                <div>
+                  <p className="text-xs text-slate-500 mb-0.5">Email</p>
+                  <p className="font-semibold text-white text-sm break-all">{site.email}</p>
+                </div>
+              </motion.a>
+
+              <motion.a
+                variants={scaleIn}
+                href={`https://wa.me/${site.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card-modern flex items-center gap-4 p-5 group"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-[#25D366] transition-colors">
+                  <span className="material-symbols-outlined">chat</span>
+                </span>
+                <div>
+                  <p className="text-xs text-slate-500 mb-0.5">WhatsApp</p>
+                  <p className="font-semibold text-white text-sm">Chat langsung</p>
+                </div>
+              </motion.a>
+            </StaggerContainer>
+          </motion.div>
+
+          <motion.div
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card-modern p-7 md:p-9 "
+          >
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              <StaggerContainer stagger={0.08}>
+                {fields.map((field) => (
+                  <motion.div key={field.key} variants={scaleIn}>
+                    <label className="text-xs font-semibold text-slate-400 mb-1.5 block">{field.label}</label>
+                    <input
+                      type={field.type}
+                      className="input-modern"
+                      placeholder={field.placeholder}
+                      required
+                      value={formData[field.key]}
+                      onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                    />
+                  </motion.div>
+                ))}
+
+                <motion.div variants={scaleIn}>
+                  <label className="text-xs font-semibold text-slate-400 mb-1.5 block">Pesan</label>
+                  <textarea
+                    className="input-modern resize-y min-h-[120px]"
+                    rows={4}
+                    placeholder="Ceritakan tentang proyek Anda..."
+                    required
+                    value={formData.summary}
+                    onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                  />
+                </motion.div>
+
+                <motion.button
+                  variants={scaleIn}
+                  type="submit"
+                  disabled={loading}
+                  className="btn-primary w-full disabled:opacity-50"
+                >
+                  {loading ? "Memproses..." : "Kirim Pesan"}
+                </motion.button>
+              </StaggerContainer>
             </form>
-          </div>
-          </FadeIn>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

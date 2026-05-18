@@ -1,109 +1,91 @@
-import FadeIn from "./FadeIn";
+"use client";
+
+import { motion } from "framer-motion";
+import SectionHeader from "./SectionHeader";
+import StaggerContainer from "./StaggerContainer";
+import { scaleIn } from "@/lib/animations";
 
 export default function Pricing() {
+  const tiers = [
+    {
+      label: "Starter",
+      title: "Landing Page",
+      desc: "Halaman web statis yang menarik untuk promosi atau portofolio.",
+      price: "Rp 1.000.000",
+      features: ["Landing page responsif", "Desain UI modern", "Integrasi konten"],
+      cta: "Mulai Proyek",
+      highlight: false,
+    },
+    {
+      label: "Populer",
+      title: "Web App & Dashboard",
+      desc: "Sistem web lengkap dengan frontend, backend, dan panel admin.",
+      price: "Rp 3.500.000",
+      features: ["Fullstack development", "Dashboard interaktif", "Deployment dasar"],
+      cta: "Mulai Proyek",
+      highlight: true,
+    },
+    {
+      label: "Enterprise",
+      title: "Full App & Web",
+      desc: "Sistem berskala besar dengan infrastruktur dan dukungan premium.",
+      price: "Rp 7.000.000",
+      features: ["Arsitektur scalable", "Dukungan premium", "Jaminan performa"],
+      cta: "Hubungi Saya",
+      highlight: false,
+    },
+  ];
+
   return (
-    <section className="py-32 bg-surface">
-      <div className="max-w-7xl mx-auto px-6">
-        <FadeIn direction="up">
-          <div className="text-center mb-20">
-            <h2 className="font-headline text-5xl font-extrabold text-white mb-6 tracking-tighter">
-              Tingkat Investasi
-            </h2>
-            <p className="text-on-surface-variant text-lg">
-              Harga transparan untuk rekayasa arsitektur premium.
-            </p>
-          </div>
-        </FadeIn>
-        
-        <div className="grid md:grid-cols-3 gap-0 border border-white/10">
-          {/* Tier 1 */}
-          <FadeIn direction="up" delay={0.1} className="p-12 border-r border-white/10 flex flex-col justify-between">
-            <div>
-              <h4 className="font-label text-xs uppercase tracking-widest text-slate-500 mb-4">Tingkat Awal</h4>
-              <h3 className="text-3xl font-bold text-white mb-2">Landing Page</h3>
-              <p className="text-on-surface-variant text-sm mb-8">
-                Pembuatan halaman web statis yang menarik untuk keperluan promosi atau portofolio.
+    <section className="section-padding bg-surface overflow-hidden relative">
+      <motion.div className="container-site relative z-10">
+        <SectionHeader
+          label="Layanan"
+          title="Paket Harga"
+          subtitle="Investasi transparan untuk setiap kebutuhan proyek Anda"
+          align="center"
+        />
+
+        <StaggerContainer className="grid md:grid-cols-3 gap-5" stagger={0.1}>
+          {tiers.map((tier) => (
+            <motion.div
+              key={tier.title}
+              variants={scaleIn}
+              whileHover={{ y: -6 }}
+              className={`card-modern p-8 md:p-9 flex flex-col relative ${
+                tier.highlight ? "ring-1 ring-white/25 bg-white/[0.05]" : ""
+              }`}
+            >
+              {tier.highlight && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-slate-950 rounded-full">
+                  Rekomendasi
+                </span>
+              )}
+              <p className="text-xs font-semibold uppercase tracking-widest text-secondary mb-2">{tier.label}</p>
+              <h3 className="text-2xl font-bold text-white mb-2">{tier.title}</h3>
+              <p className="text-on-surface-variant text-sm mb-6">{tier.desc}</p>
+              <p className="text-3xl font-black text-white mb-6">
+                {tier.price}
+                <span className="text-sm font-normal text-slate-500"> / mulai</span>
               </p>
-              <div className="text-4xl font-black text-white mb-10">
-                Rp 1.000.000<span className="text-sm font-normal text-slate-500"> / mulai</span>
-              </div>
-              <ul className="space-y-4 mb-12">
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Pembuatan Landing Page Responsif
-                </li>
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Desain UI Sederhana
-                </li>
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Integrasi Konten Statis
-                </li>
+              <ul className="space-y-3 mb-8 flex-1">
+                {tier.features.map((feature) => (
+                  <li key={feature} className="flex items-center gap-2 text-sm text-on-surface-variant">
+                    <span className="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                    {feature}
+                  </li>
+                ))}
               </ul>
-            </div>
-            <button className="w-full py-4 border border-white/20 text-white font-bold hover:bg-white/5 transition-colors sharp-edge">
-              Mulai Proyek
-            </button>
-          </FadeIn>
-          
-          {/* Tier 2 */}
-          <FadeIn direction="up" delay={0.2} className="p-12 bg-white/5 border-r border-white/10 flex flex-col justify-between relative">
-            <div className="absolute top-0 right-0 bg-white text-slate-950 px-4 py-1 text-[10px] font-black uppercase tracking-widest">
-              Rekomendasi
-            </div>
-            <div>
-              <h4 className="font-label text-xs uppercase tracking-widest text-slate-500 mb-4">Standar</h4>
-              <h3 className="text-3xl font-bold text-white mb-2">Web App & Dashboard</h3>
-              <p className="text-on-surface-variant text-sm mb-8">
-                Sistem web komprehensif termasuk frontend, backend, dan panel admin/dashboard.
-              </p>
-              <div className="text-4xl font-black text-white mb-10">
-                Rp 3.500.000<span className="text-sm font-normal text-slate-500"> / mulai</span>
-              </div>
-              <ul className="space-y-4 mb-12">
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Pengembangan Frontend & Backend
-                </li>
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Panel Admin/Dashboard Interaktif
-                </li>
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Hosting dan Deployment Sederhana
-                </li>
-              </ul>
-            </div>
-            <button className="w-full py-4 bg-white text-slate-950 font-bold hover:bg-slate-200 transition-colors sharp-edge">
-              Mulai Proyek
-            </button>
-          </FadeIn>
-          
-          {/* Tier 3 */}
-          <FadeIn direction="up" delay={0.3} className="p-12 flex flex-col justify-between">
-            <div>
-              <h4 className="font-label text-xs uppercase tracking-widest text-slate-500 mb-4">Perusahaan</h4>
-              <h3 className="text-3xl font-bold text-white mb-2">Full App & Web</h3>
-              <p className="text-on-surface-variant text-sm mb-8">
-                Pengembangan sistem berskala besar mencakup aplikasi web dan mobile dengan infrastruktur lengkap.
-              </p>
-              <div className="text-4xl font-black text-white mb-10">
-                Rp 7.000.000<span className="text-sm font-normal text-slate-500"> / mulai</span>
-              </div>
-              <ul className="space-y-4 mb-12">
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Arsitektur Multi-Penyewa
-                </li>
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Dukungan Premium
-                </li>
-                <li className="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <span className="material-symbols-outlined text-white text-lg">check</span> Jaminan Performa
-                </li>
-              </ul>
-            </div>
-            <button className="w-full py-4 border border-white/20 text-white font-bold hover:bg-white/5 transition-colors sharp-edge">
-              Hubungi Saya
-            </button>
-          </FadeIn>
-        </div>
-      </div>
+              <button
+                type="button"
+                className={tier.highlight ? "btn-primary w-full" : "btn-secondary w-full"}
+              >
+                {tier.cta}
+              </button>
+            </motion.div>
+          ))}
+        </StaggerContainer>
+      </motion.div>
     </section>
   );
 }

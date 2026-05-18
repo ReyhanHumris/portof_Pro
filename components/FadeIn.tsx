@@ -1,30 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { ReactNode } from "react";
+import { fadeDown, fadeLeft, fadeRight, fadeUp, scaleIn } from "@/lib/animations";
 
 interface Props {
   children: ReactNode;
   delay?: number;
-  direction?: "up" | "down" | "left" | "right" | "none";
+  direction?: "up" | "down" | "left" | "right" | "none" | "scale";
   className?: string;
+  as?: keyof typeof motion;
 }
 
-export default function FadeIn({ children, delay = 0, direction = "up", className = "" }: Props) {
-  const directions = {
-    up: { y: 40, x: 0 },
-    down: { y: -40, x: 0 },
-    left: { x: 40, y: 0 },
-    right: { x: -40, y: 0 },
-    none: { x: 0, y: 0 }
-  };
+const variantMap: Record<string, Variants> = {
+  up: fadeUp,
+  down: fadeDown,
+  left: fadeLeft,
+  right: fadeRight,
+  scale: scaleIn,
+  none: {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.6 } },
+  },
+};
+
+export default function FadeIn({
+  children,
+  delay = 0,
+  direction = "up",
+  className = "",
+}: Props) {
+  const variants = variantMap[direction] ?? fadeUp;
 
   return (
     <motion.div
-      initial={{ opacity: 0, ...directions[direction] }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.7, delay, ease: "easeOut" }}
+      variants={variants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ delay }}
       className={className}
     >
       {children}

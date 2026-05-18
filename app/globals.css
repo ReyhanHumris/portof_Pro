@@ -13,13 +13,13 @@
   --color-surface-variant: #2d3449;
   --color-on-tertiary-fixed: #ffffff;
   --color-on-error: #690005;
-  --color-surface: #0b1326;
+  --color-surface: #080c14;
   --color-on-primary-fixed: #ffffff;
   --color-on-primary-fixed-variant: #e1e3e4;
-  --color-background: #0b1326;
+  --color-background: #060b18;
   --color-secondary-fixed-dim: #9dacc2;
   --color-secondary: #b9c8de;
-  --color-surface-dim: #0b1326;
+  --color-surface-dim: #060b18;
   --color-primary-fixed: #5c5f60;
   --color-primary: #ffffff;
   --color-on-background: #dae2fd;
@@ -32,10 +32,10 @@
   --color-surface-bright: #31394d;
   --color-inverse-surface: #dae2fd;
   --color-on-primary: #191c1d;
-  --color-surface-container-low: #131b2e;
+  --color-surface-container-low: #0c1224;
   --color-on-secondary: #0d1c2d;
-  --color-surface-container-lowest: #060e20;
-  --color-on-surface: #dae2fd;
+  --color-surface-container-lowest: #030712;
+  --color-on-surface: #e8eeff;
   --color-tertiary-container: #8292aa;
   --color-error: #ffb4ab;
   --color-tertiary-fixed-dim: #38485d;
@@ -43,37 +43,274 @@
   --color-inverse-primary: #5c5f60;
   --color-primary-container: #d3d4d5;
   --color-outline-variant: #474747;
-  --color-surface-container-high: #222a3d;
+  --color-surface-container-high: #1a2238;
   --color-surface-tint: #c5c7c8;
-  --color-surface-container-highest: #2d3449;
+  --color-surface-container-highest: #252f4a;
   --color-on-tertiary-fixed-variant: #d3e4fe;
   --color-outline: #919191;
+  --color-accent: #b9c8de;
+  --color-accent-muted: rgba(185, 200, 222, 0.15);
+  --nav-rail-width: 4.25rem;
+  --nav-offset-left: 1rem;
+  --content-offset-left: 6.75rem;
 
-  --radius-DEFAULT: 0rem;
-  --radius-lg: 0rem;
-  --radius-xl: 0rem;
+  --radius-sm: 0.625rem;
+  --radius-DEFAULT: 0.875rem;
+  --radius-lg: 1.125rem;
+  --radius-xl: 1.375rem;
+  --radius-2xl: 1.75rem;
   --radius-full: 9999px;
 
   --font-headline: "Manrope", sans-serif;
   --font-body: "Manrope", sans-serif;
   --font-label: "Manrope", sans-serif;
-  --font-manrope: "Manrope", sans-serif; /* Adding for the font-manrope class in navbar */
+  --font-manrope: "Manrope", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-size: 115%; /* Increments base rem size to scale everything up uniformly */
+    font-size: 118%;
   }
+
   body {
     background-color: var(--color-surface);
     color: var(--color-on-surface);
-    font-family: 'Manrope', sans-serif;
+    font-family: "Manrope", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(148, 163, 184, 0.35);
+    color: #fff;
+  }
+}
+
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+body {
+  padding-left: 0;
+  padding-bottom: 5.75rem;
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-left: var(--content-offset-left);
+    padding-bottom: 0;
   }
 }
 
 @layer utilities {
-  .sharp-edge {
-    border-radius: 0 !important;
+  .container-site {
+    width: 100%;
+    max-width: 82rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
+
+  @media (min-width: 640px) {
+    .container-site {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 1rem 1.75rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0a0f1a;
+    background: #ffffff;
+    border-radius: var(--radius-full);
+    border: none;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    background: #f1f5f9;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 1rem 1.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-full);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .card-modern {
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px -12px rgba(0, 0, 0, 0.45);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-2xl);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .badge-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+  }
+
+  .badge-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  .input-modern {
+    width: 100%;
+    padding: 1rem 1.125rem;
+    font-size: 1rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-modern:focus {
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .section-mesh::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .modern-grid-bg {
+    background: transparent;
+  }
+
+  .noise-overlay::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 28s linear infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .scan-line-h {
+    animation: scan-h 6s linear infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.06); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes scan-h {
+  0% { transform: translateY(-100vh); opacity: 0; }
+  15% { opacity: 0.6; }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
 }

@@ -1,3 +1,4 @@
+import FuturisticBackground from "@/components/FuturisticBackground";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -11,17 +12,20 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <FuturisticBackground />
       <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Process />
-        <Pricing />
-        <Contact />
-      </main>
-      <Footer />
+      <div className="relative z-[1] min-h-screen">
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Process />
+          <Pricing />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
