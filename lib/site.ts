@@ -8,7 +8,17 @@ export const site = {
   location: "Ende, NTT",
   email: "raihaanhumris@gmail.com",
   whatsapp: "628233934478",
+  /** Nama tampilan di profil GitHub */
+  githubName: "Muhammad Raihaan Humris",
+  /**
+   * @handle GitHub (tanpa spasi). Sesuaikan di .env: GITHUB_USERNAME=handle_anda
+   */
+  githubUsername: "ReyhanHumris",
 } as const;
+
+export function githubProfileUrl(username: string = site.githubUsername) {
+  return `https://github.com/${username}`;
+}
 
 export const navLinks = [
   { id: "home", label: "Beranda", href: "#home", icon: "home" },

@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, staggerContainer } from "@/lib/animations";
-import { navLinks, site } from "@/lib/site";
+import { githubProfileUrl, navLinks, site } from "@/lib/site";
 
 const social = [
-  { label: "GitHub", href: "https://github.com/raihaanhumris" },
+  { label: "GitHub", href: githubProfileUrl() },
   { label: "LinkedIn", href: "https://linkedin.com/in/raihaanhumris" },
   { label: "Email", href: `mailto:${site.email}` },
 ];

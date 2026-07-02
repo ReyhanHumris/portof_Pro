@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
-import CustomCursor from "@/components/CustomCursor";
+import CustomCursorLoader from "@/components/CustomCursorLoader";
 import "./globals.css";
 
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
-  weight: ["200", "400", "500", "700", "800"],
+  weight: ["400", "500", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -76,7 +77,7 @@ export default function RootLayout({
     "jobTitle": "Fullstack Engineer",
     "url": "https://raihaanhumris.vercel.app",
     "sameAs": [
-      "https://github.com/raihaanhumris",
+      "https://github.com/ReyhanHumris",
       "https://linkedin.com/in/raihaanhumris"
     ]
   };
@@ -101,8 +102,8 @@ export default function RootLayout({
           `}
         </style>
       </head>
-      <body className={`${manrope.className} bg-surface text-on-surface antialiased flex flex-col min-h-screen noise-overlay`}>
-        <CustomCursor />
+      <body className={`${manrope.className} bg-surface text-on-surface antialiased flex flex-col min-h-screen`}>
+        <CustomCursorLoader />
         {children}
       </body>
     </html>

@@ -1,76 +1,350 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import SectionHeader from "./SectionHeader";
-import StaggerContainer from "./StaggerContainer";
-import { scaleIn } from "@/lib/animations";
+import { githubProfileUrl, site } from "@/lib/site";
+import { demoHostname, formatRepoTitle, type GitHubRepo } from "@/lib/github";
+
+function formatPushedAt(iso: string) {
+  return new Date(iso).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function ProjectSkeleton() {
+  return (
+    <div className="card-modern overflow-hidden animate-pulse">
+      <div className="aspect-[16/10] bg-white/[0.05]" />
+      <div className="p-5 space-y-3">
+        <div className="h-5 w-2/3 rounded bg-white/[0.08]" />
+        <div className="h-4 w-full rounded bg-white/[0.05]" />
+        <div className="h-8 w-24 rounded-full bg-white/[0.06]" />
+      </div>
+    </div>
+  );
+}
+
+type ProjectModalProps = {
+  project: GitHubRepo;
+  onClose: () => void;
+};
+
+function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const tags = [
+    ...(project.language ? [project.language] : []),
+    ...project.topics,
+  ];
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [handleKeyDown]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-modal-title"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 bg-slate-950/75 backdrop-blur-[2px]"
+        aria-label="Tutup detail proyek"
+        onClick={onClose}
+      />
+
+      <motion.div
+        className="relative w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-t-2xl sm:rounded-2xl border border-white/[0.1] bg-[#0c1220] shadow-2xl"
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 24, opacity: 0 }}
+        transition={{ duration: 0.25 }}
+      >
+        <div className="p-6 sm:p-8">
+          <div className="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <span className="badge-label mb-3 inline-flex">Live demo</span>
+              <h3 id="project-modal-title" className="text-2xl font-bold text-white leading-tight">
+                {formatRepoTitle(project.name)}
+              </h3>
+              <p className="text-xs text-slate-500 font-mono mt-2">{demoHostname(project.homepage)}</p>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="shrink-0 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+              aria-label="Tutup"
+            >
+              <span className="material-symbols-outlined text-xl">close</span>
+            </button>
+          </div>
+
+          <p className="text-on-surface-variant text-base leading-relaxed mb-6">
+            {project.description}
+          </p>
+
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-6 border border-white/[0.08] bg-slate-900">
+            <iframe
+              src={project.homepage}
+              title={`Live Demo of ${project.name}`}
+              className="w-full h-full border-0"
+              sandbox="allow-scripts allow-same-origin"
+              loading="lazy"
+              allow="fullscreen"
+            />
+          </div>
+
+          <div className="flex flex-wrap gap-4 text-sm text-slate-400 mb-6 pb-6 border-b border-white/[0.08]">
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-base">star</span>
+              {project.stars} stars
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-base">fork_right</span>
+              {project.forks} forks
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-base">update</span>
+              {formatPushedAt(project.pushedAt)}
+            </span>
+          </div>
+
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-300 rounded-full bg-white/[0.06] border border-white/10"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href={project.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-sm flex-1 justify-center"
+            >
+              Buka demo live
+              <span className="material-symbols-outlined text-lg">open_in_new</span>
+            </a>
+            <a
+              href={project.htmlUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary text-sm flex-1 justify-center"
+            >
+              Lihat kode
+              <span className="material-symbols-outlined text-lg">code</span>
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Projects() {
-  const projects = [
-    {
-      title: "Dasbor Terintegrasi",
-      desc: "Sistem pemantauan kinerja tinggi untuk data logistik real-time dengan visualisasi interaktif.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA9yTuWiHO2sKEFWrnsI7Zi06RxrEM2hy-4qHcuAIz4wX-01fr_CRfTggD29o1b4IjbhHIqEoNjziV7xq5omD5mtM-cjr-6oHi2N78yvYw6Zo1Toe7BKyO8yALcfM0Xq6FL2bq324kmmjb489s-FBje82sb9EsH0dEnQWnWbNd1fq8U9oG71kP9jHsbGyrzXshAy1vr4_MeDedNuuGO_djyz8tQQPC77g2fXY7hEsXF4E6UTQsvHLG5w-_VCYoF-PjMzBdrQxepCqo",
-      tags: ["Next.js", "Redis"],
-    },
-    {
-      title: "Mesin E-commerce",
-      desc: "Solusi commerce headless dengan pemfilteran produk latensi rendah dan integrasi pembayaran.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDisnJAs1aJ9EsT-FJZZFUFID_7zP_-J8eX3H6Xm7JNouRn5EEL0aogrvMC9jpxBoKlo_ZeYcp_LbpsbAx4iUVave5OG3VsNIXvcpWBBpReMA6ZLs8-3epOQp9lzIY8fHkS86zmCcfKMd4v17hO2WKJuJ-QkAGgLLGlV_qqMgjHcIf1YUP9q7AQgiXvRZh-mC-VlwyuyTonXBUH5lBg89EFjtD6iHpr-sHklbVv_N82927veXeUbuMNl8luXP8E5PnE5cMeDmI4Nk8",
-      tags: ["Node.js", "Stripe"],
-    },
-    {
-      title: "Portal Infrastruktur",
-      desc: "Dasbor DevOps internal untuk otomasi deployment dan monitoring sumber daya cloud.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD4devswQd5zICHcZymMVsU9tjfSzgj8ZMWDR6CgDG6x3GQMR9TKux60t_w6XmzNeodsJYhxsKY0Crg3MBBPE7fMPvEUI3n-kxG3TO91j2VbyG6-jFR2vDb2DVpyUyjvrWRr0VLgM5CcxpKvBCqgHEYwteS1HnVtcg8-gST0_Y7kPy3WrXlgCnOYYEIDnEcKvPDmJeHY7NLHaUWJv_QbqsvjzEAmGAJzaexzXlQXXaxQPreY6klZpDDn7OZ_UFZu9YJlTUmeNhoQxQ",
-      tags: ["Docker", "Go"],
-    },
-  ];
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [profileUrl, setProfileUrl] = useState(githubProfileUrl());
+  const [username, setUsername] = useState(site.githubUsername);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selected, setSelected] = useState<GitHubRepo | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load(silent = false) {
+      try {
+        const res = await fetch("/api/github/repos", { cache: "no-store" });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error ?? "Gagal memuat proyek");
+        }
+
+        if (cancelled) return;
+
+        setRepos(data.repos ?? []);
+        setProfileUrl(data.profileUrl ?? githubProfileUrl());
+        setUsername(data.username ?? site.githubUsername);
+        setError(null);
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "Gagal memuat proyek");
+        }
+      } finally {
+        if (!cancelled && !silent) setLoading(false);
+      }
+    }
+
+    load();
+
+    const onVisible = () => {
+      if (document.visibilityState === "visible") load(true);
+    };
+
+    const interval = window.setInterval(() => {
+      if (document.visibilityState === "visible") load(true);
+    }, 60_000);
+
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, []);
 
   return (
     <section id="projects" className="section-padding bg-surface-container-lowest overflow-hidden relative">
-      <motion.div className="container-site relative z-10">
+      <div className="container-site relative z-10">
         <SectionHeader
           label="Proyek"
-          title="Karya Terpilih"
-          subtitle="Beberapa proyek yang menunjukkan pendekatan saya dalam membangun sistem web"
+          title="Demo Live"
+          subtitle={`Proyek dengan website aktif · @${username}`}
         />
 
-        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-5" stagger={0.1}>
-          {projects.map((project) => (
-            <motion.article
-              key={project.title}
-              variants={scaleIn}
-              whileHover={{ y: -6 }}
-              className="card-modern overflow-hidden flex flex-col group"
+        {loading && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <ProjectSkeleton key={i} />
+            ))}
+          </div>
+        )}
+
+        {!loading && error && (
+          <div className="card-modern p-8 text-center max-w-lg mx-auto">
+            <span className="material-symbols-outlined text-4xl text-slate-500 mb-3 block">
+              cloud_off
+            </span>
+            <p className="text-on-surface-variant text-sm mb-4">{error}</p>
+            <a
+              href={profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex text-sm"
             >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <motion.img
-                  src={project.img}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-                  whileHover={{ scale: 1.05 }}
-                />
-                <motion.div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <h3 className="text-lg font-bold text-white mb-2">{project.title}</h3>
-                <p className="text-on-surface-variant text-sm leading-relaxed mb-4 flex-1">{project.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-300 rounded-full bg-white/[0.06] border border-white/10"
-                    >
-                      {tag}
+              Buka GitHub
+              <span className="material-symbols-outlined text-lg">open_in_new</span>
+            </a>
+          </div>
+        )}
+
+        {!loading && !error && repos.length === 0 && (
+          <div className="card-modern p-8 text-center max-w-lg mx-auto">
+            <p className="text-on-surface-variant text-sm mb-2">
+              Belum ada repositori dengan demo live.
+            </p>
+            <p className="text-xs text-slate-500 mb-6">
+              Isi field <strong className="text-slate-400">Website</strong> di repositori GitHub
+              (URL Vercel, Netlify, dll.) agar muncul di sini.
+            </p>
+            <a
+              href={profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary inline-flex text-sm"
+            >
+              Kelola di GitHub · @{username}
+            </a>
+          </div>
+        )}
+
+        {!loading && !error && repos.length > 0 && (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {repos.map((project) => (
+                <button
+                  key={project.id}
+                  type="button"
+                  onClick={() => setSelected(project)}
+                  className="card-modern overflow-hidden flex flex-col text-left group transition-transform duration-200 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+                    {/* Iframe Preview */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      <iframe
+                        src={project.homepage}
+                        title={`Preview of ${project.name}`}
+                        className="absolute top-0 left-0 origin-top-left opacity-75 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ width: '400%', height: '400%', transform: 'scale(0.25)' }}
+                        sandbox="allow-scripts allow-same-origin"
+                        loading="lazy"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                      />
+                    </div>
+                    {/* Fallback overlay to make text readable */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/20 to-transparent pointer-events-none" />
+                    
+                    <span className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-wider text-emerald-300 bg-emerald-500/20 backdrop-blur-md border border-emerald-500/30 px-2 py-1 rounded-full shadow-lg">
+                      Live
                     </span>
-                  ))}
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </StaggerContainer>
-      </motion.div>
+                    <span className="absolute bottom-3 left-3 right-3 text-[10px] font-mono text-slate-300 bg-slate-900/60 backdrop-blur-md px-2 py-1.5 rounded truncate border border-white/5">
+                      {demoHostname(project.homepage)}
+                    </span>
+                  </div>
+
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="text-lg font-bold text-white mb-2 leading-tight group-hover:text-slate-100">
+                      {formatRepoTitle(project.name)}
+                    </h3>
+                    <p className="text-on-surface-variant text-sm leading-relaxed mb-4 flex-1 line-clamp-2">
+                      {project.description}
+                    </p>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-label">
+                      Klik untuk detail →
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-10 text-center">
+              <a
+                href={profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary inline-flex text-sm"
+              >
+                Semua repo · @{username}
+                <span className="material-symbols-outlined text-lg">arrow_outward</span>
+              </a>
+            </div>
+          </>
+        )}
+      </div>
+
+      <AnimatePresence>
+        {selected && (
+          <ProjectModal project={selected} onClose={() => setSelected(null)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
